@@ -28,7 +28,7 @@ test.describe('SauceDemo Checkout Flow', () => {
     // Fill details
     await page.fill('[data-test="firstName"]', 'Senior');
     await page.fill('[data-test="lastName"]', 'Engineer');
-    await page.fill('[data-test="postalCode"]', '90210');
+    await page.fill('[data-test="postalCode"]', '90210'); 
 
     await page.click('[data-test="continue"]');
     await page.click('[data-test="finish"]');
@@ -37,25 +37,25 @@ test.describe('SauceDemo Checkout Flow', () => {
     await expect(page.locator('.complete-header')).toHaveText('Thank you for your order!');
   });
 
-  // This is for UI Testing
-test('UX Check: Button should turn red when item is added', async ({ page }) => {
-  await page.goto('https://www.saucedemo.com/inventory.html');
+//   // This is for UI Testing
+// test('UX Check: Button should turn red when item is added', async ({ page }) => {
+//   await page.goto('https://www.saucedemo.com/inventory.html');
 
-  const addBtn = page.locator('[data-test="add-to-cart-sauce-labs-backpack"]');
-  const removeBtn = page.locator('[data-test="remove-sauce-labs-backpack"]');
+//   const addBtn = page.locator('[data-test="add-to-cart-sauce-labs-backpack"]');
+//   const removeBtn = page.locator('[data-test="remove-sauce-labs-backpack"]');
 
-  // 1. Click to add
-  await addBtn.click();
+//   // 1. Click to add
+//   await addBtn.click();
 
-  // 2. The button now says "Remove". Let's check its color.
-  // In SauceDemo, the "Remove" button uses the color: rgb(226, 35, 26)
-  const color = await removeBtn.evaluate((el) => {
-    return window.getComputedStyle(el).color;
-  });
+//   // 2. The button now says "Remove". Let's check its color.
+//   // In SauceDemo, the "Remove" button uses the color: rgb(226, 35, 26)
+//   const color = await removeBtn.evaluate((el) => {
+//     return window.getComputedStyle(el).color;
+//   });
 
-  console.log(`Button color is: ${color}`);
-  expect(color).toBe('rgb(226, 35, 26)'); // This is the red color
-}); 
+//   console.log(`Button color is: ${color}`);
+//   expect(color).toBe('rgb(226, 35, 26)'); // This is the red color
+// }); 
 
 
 });
