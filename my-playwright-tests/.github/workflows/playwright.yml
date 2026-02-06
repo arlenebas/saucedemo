@@ -12,16 +12,20 @@ jobs:
           node-version: 18
 
       - name: Install dependencies
-        run: npm install
-        working-directory: ./ 
+        # This command finds the folder containing package.json and runs npm install there
+        run: |
+          cd $(find . -name package.json -exec dirname {} \;)
+          npm install
+        
+      - name: Install Playwright Browsers
+        run: |
+          cd $(find . -name package.json -exec dirname {} \;)
+          npx playwright install --with-deps
 
-      - name: Install Playwright
-        run: npx playwright install --with-deps
-        working-directory: ./
-
-      - name: Run Tests
-        run: npx playwright test --reporter=html
-        working-directory: ./SauceDemoAssessment
+      - name: Run Playwright tests
+        run: |
+          cd $(find . -name package.json -exec dirname {} \;)
+          npx playwright test --reporter=html
 
       - name: Upload Report
         uses: actions/upload-artifact@v4
