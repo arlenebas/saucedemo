@@ -5,32 +5,32 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
+    # This block ensures every command runs inside your project folder
+    defaults:
+      run:
+        working-directory: SauceDemoAssessment
     steps:
       - uses: actions/checkout@v4
+
       - uses: actions/setup-node@v4
         with:
           node-version: 18
 
       - name: Install dependencies
-        # This command finds the folder containing package.json and runs npm install there
-        run: |
-          cd $(find . -name package.json -exec dirname {} \;)
-          npm install
-        
+        run: npm install
+
       - name: Install Playwright Browsers
-        run: |
-          cd $(find . -name package.json -exec dirname {} \;)
-          npx playwright install --with-deps
+        run: npx playwright install --with-deps
 
       - name: Run Playwright tests
-        run: |
-          cd $(find . -name package.json -exec dirname {} \;)
-          npx playwright test --reporter=html
+        # We add the HTML reporter flag to guarantee the folder is created
+        run: npx playwright test --reporter=html
 
       - name: Upload Report
         uses: actions/upload-artifact@v4
         if: always()
         with:
           name: playwright-report
+          # This glob pattern finds the folder regardless of exact pathing
           path: "**/playwright-report/"
           retention-days: 30
